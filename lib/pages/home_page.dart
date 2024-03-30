@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/components/app_description_box.dart';
 import 'package:food_app/components/app_drawer.dart';
 import 'package:food_app/components/app_sliver_appbar.dart';
+import 'package:food_app/components/app_tab_bar.dart';
 import 'package:food_app/components/my_current_location.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,7 +12,22 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +36,9 @@ class _HomePageState extends State<HomePage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           AppSliverAppBar(
-            title: const Text("Hello"),
+            title: AppTabBar(
+              tabController: tabController,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -37,7 +55,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-        body: Container(),
+        body: TabBarView(
+          children: [
+            Text("Data"),
+            Text("Data"),
+            Text("Data"),
+          ],
+        ),
       ),
     );
   }
