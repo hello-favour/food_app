@@ -4,6 +4,9 @@ import 'package:food_app/components/app_drawer.dart';
 import 'package:food_app/components/app_sliver_appbar.dart';
 import 'package:food_app/components/app_tab_bar.dart';
 import 'package:food_app/components/my_current_location.dart';
+import 'package:food_app/models/food.dart';
+import 'package:food_app/models/restaurants.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +21,8 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: FoodCategory.values.length, vsync: this);
     super.initState();
   }
 
@@ -26,6 +30,31 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     tabController.dispose();
     super.dispose();
+  }
+
+  //sort out and return a list of food items that belong to a specific category
+  List<Food> _filterMenuByCategory(FoodCategory category, List<Food> fullMenu) {
+    return fullMenu.where((food) => food.category == category).toList();
+  }
+
+  //return list of food in given category
+  List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
+    return FoodCategory.values.map((category) {
+      List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
+
+      return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: categoryMenu.length,
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                categoryMenu[index].name,
+                style: const TextStyle(fontSize: 14),
+              ),
+            );
+          });
+    }).toList();
   }
 
   @override
@@ -41,6 +70,7 @@ class _HomePageState extends State<HomePage>
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Divider(
                   indent: 25,
@@ -55,12 +85,11 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ],
-        body: TabBarView(
-          children: [
-            Text("Data"),
-            Text("Data"),
-            Text("Data"),
-          ],
+        body: Consumer<Restaurant>(
+          builder: (context, restaurant, child) => TabBarView(
+            controller: tabController,
+            children: getFoodInThisCategory(restaurant.menu),
+          ),
         ),
       ),
     );
