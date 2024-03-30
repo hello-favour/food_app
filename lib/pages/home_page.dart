@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/components/app_description_box.dart';
 import 'package:food_app/components/app_drawer.dart';
+import 'package:food_app/components/app_food_tile.dart';
 import 'package:food_app/components/app_sliver_appbar.dart';
 import 'package:food_app/components/app_tab_bar.dart';
 import 'package:food_app/components/my_current_location.dart';
@@ -47,11 +48,10 @@ class _HomePageState extends State<HomePage>
           itemCount: categoryMenu.length,
           padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                categoryMenu[index].name,
-                style: const TextStyle(fontSize: 14),
-              ),
+            final food = categoryMenu[index];
+            return AppFoodTile(
+              food: food,
+              onTap: () {},
             );
           });
     }).toList();

@@ -61,7 +61,7 @@ class Restaurant extends ChangeNotifier {
       name: "Spicy Southwest Burger",
       description:
           "Ignite your taste buds with our Spicy Southwest Burger. A fiery blend of jalapeno-infused beef patty, pepper jack cheese, roasted poblano peppers, and spicy chipotle aioli, served on a toasted jalapeno cheddar bun.",
-      imagePath: "images/burgers/burger5.png",
+      imagePath: "images/burgers/burger2.png",
       price: 3.99,
       availableAddons: [
         Addon(name: "Sriracha Mayo", price: 1.49),
