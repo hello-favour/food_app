@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/components/app_button.dart';
 import 'package:food_app/components/app_cartTile.dart';
 import 'package:food_app/models/restaurants.dart';
 import 'package:provider/provider.dart';
@@ -48,17 +49,33 @@ class CartPage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            //list of cart
             Expanded(
-              child: ListView.builder(
-                itemCount: userCart.length,
-                itemBuilder: (context, index) {
-                  final cartItem = userCart[index];
-                  return AppCartTile(
-                    cartItem: cartItem,
-                  );
-                },
+              child: Column(
+                children: [
+                  userCart.isEmpty
+                      ? const Expanded(
+                          child: Text("Cart is empty..."),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: userCart.length,
+                            itemBuilder: (context, index) {
+                              final cartItem = userCart[index];
+                              return AppCartTile(
+                                cartItem: cartItem,
+                              );
+                            },
+                          ),
+                        ),
+                ],
               ),
             ),
+            AppButton(
+              onTap: () {},
+              text: "Go to checkout",
+            ),
+            const SizedBox(height: 25),
           ],
         ),
       );
