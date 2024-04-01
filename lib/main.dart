@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/firebase_options.dart';
 import 'package:food_app/models/restaurants.dart';
 import 'package:food_app/pages/home_page.dart';
+import 'package:food_app/services/auth_gate.dart';
 import 'package:food_app/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food App',
-      home: const HomePage(),
+      home: const AuthGate(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }

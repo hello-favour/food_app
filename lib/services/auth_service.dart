@@ -29,7 +29,7 @@ class AuthService {
     try {
       //sign user in
       UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -39,6 +39,8 @@ class AuthService {
     }
   }
 
-
   //sign out
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
 }
