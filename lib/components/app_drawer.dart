@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/components/app_drawer_tile.dart';
 import 'package:food_app/pages/setting_page.dart';
+import 'package:food_app/services/auth_service.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -10,6 +11,11 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  void logOut() {
+    final _authService = AuthService();
+    _authService.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,7 +60,7 @@ class _AppDrawerState extends State<AppDrawer> {
           AppDrawerTile(
             text: "L O G O U T",
             icon: Icons.home,
-            onTap: () {},
+            onTap: logOut,
           ),
           const SizedBox(height: 20),
         ],
